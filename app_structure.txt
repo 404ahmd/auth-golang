@@ -1,0 +1,12 @@
+auth-app/
+├── main.go
+├── config/
+│   └── database.go
+├── models/
+│   └── user.go
+├── handlers/
+│   └── auth.go
+├── middleware/
+│   └── jwt.go
+└── routes/
+    └── routes.go
