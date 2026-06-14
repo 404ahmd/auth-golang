@@ -1,26 +1,33 @@
 package routes
 
 import (
-    "auth-golang-jwt/handlers"
-    "auth-golang-jwt/middleware"
+	"auth-golang-jwt/handlers"
+	"auth-golang-jwt/middleware"
 
-    "github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin"
 )
 
 func SetupRoutes(r *gin.Engine) {
-    api := r.Group("/api")
+	api := r.Group("/api")
 
-    // Public routes
-    auth := api.Group("/auth")
-    {
-        auth.POST("/register", handlers.Register)
-        auth.POST("/login", handlers.Login)
-    }
+	// Public routes
+	auth := api.Group("/auth")
+	{
+		auth.POST("/register", handlers.Register)
+		auth.POST("/login", handlers.Login)
+	}
 
-    // Protected routes
-    protected := api.Group("/")
-    protected.Use(middleware.AuthMiddleware())
-    {
-        protected.GET("/profile", handlers.Profile)
-    }
+	// Protected routes
+	protected := api.Group("/")
+	protected.Use(middleware.AuthMiddleware())
+	{
+		protected.GET("/profile", handlers.Profile)
+
+		// Employee routes
+		protected.POST("/employees", handlers.CreateEmployee)
+		protected.GET("/employees", handlers.GetEmployees)
+		protected.GET("/employees/:id", handlers.GetEmployeeByID)
+		protected.PUT("/employees/:id", handlers.UpdateEmployee)
+		protected.DELETE("/employees/:id", handlers.DeleteEmployee)
+	}
 }

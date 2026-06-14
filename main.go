@@ -21,7 +21,7 @@ func main() {
     }
 
     config.ConnectDB()
-    config.DB.AutoMigrate(&models.User{})
+    config.DB.AutoMigrate(&models.User{}, &models.Employee{})
 
     r := gin.Default()
     routes.SetupRoutes(r)
